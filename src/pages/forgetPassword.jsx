@@ -27,6 +27,7 @@ export default function ForgotPassword() {
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [passwordHint, setPasswordHint] = useState("");
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   const calculateStrengthAndHint = (password) => {
     let strength = 0;
@@ -69,7 +70,7 @@ export default function ForgotPassword() {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/reset-password`, {
+      const res = await fetch(`${apiUrl}/api/auth/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),

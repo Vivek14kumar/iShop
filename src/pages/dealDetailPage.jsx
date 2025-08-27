@@ -23,11 +23,12 @@ export default function DealDetailPage() {
   const { addToCart } = useCart(); // useCart context
   const isDealExpired = timeLeft === "Deal Expired";
   const isOutOfStock = deal?.stock <= 0;
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   useEffect(() => {
     async function fetchDeal() {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/todaysDeals/${dealId}`);
+        const res = await axios.get(`${apiUrl}/api/todaysDeals/${dealId}`);
         setDeal(res.data);
         setSelectedImage(res.data.image || res.data.product.image);
       } catch (err) {

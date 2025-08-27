@@ -31,11 +31,12 @@ export default function TodaysDeals() {
   //  pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   // Fetch deals
   const fetchDeals = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/todaysDeals");
+      const res = await axios.get(`${apiUrl}/api/todaysDeals`);
       setDeals(res.data);
     } catch {
       toast.error("Failed to fetch deals");
@@ -45,7 +46,7 @@ export default function TodaysDeals() {
   // Fetch categories
   const fetchCategories = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`);
+      const res = await axios.get(`${apiUrl}/api/categories`);
       setCategories(res.data);
     } catch {
       toast.error("Failed to fetch categories");
@@ -56,7 +57,7 @@ export default function TodaysDeals() {
   const fetchProducts = async (categoryName) => {
     try {
       const res = await axios.get(
-     `${import.meta.env.VITE_API_URL}/api/products/category/${categoryName}`
+     `${apiUrl}/api/products/category/${categoryName}`
    );
    setProducts(res.data);
     } catch {
@@ -116,12 +117,12 @@ export default function TodaysDeals() {
     try {
       if (editingId) {
         await axios.put(
-          `${import.meta.env.VITE_API_URL}/api/todaysDeals/${editingId}`,
+          `${apiUrl}/api/todaysDeals/${editingId}`,
           formData
         );
         toast.success("Deal updated successfully!");
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/todaysDeals`, formData);
+        await axios.post(`${apiUrl}/api/todaysDeals`, formData);
         toast.success("Deal added successfully!");
       }
 
@@ -165,7 +166,7 @@ const handleEdit = async (deal) => {
   setPreview(
     deal.image.startsWith("http")
       ? deal.image
-      : `${import.meta.env.VITE_API_URL}${deal.image}`
+      : `${apiUrl}${deal.image}`
   );
   toast.info("Editing deal");
 };
@@ -184,7 +185,7 @@ const handleEdit = async (deal) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${import.meta.env.VITE_API_URL}/api/todaysDeals/${id}`);
+          await axios.delete(`${apiUrl}/api/todaysDeals/${id}`);
           Swal.fire({
             title: "Deleted!",
             text: "The deal has been deleted.",

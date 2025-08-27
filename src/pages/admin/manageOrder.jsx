@@ -15,6 +15,7 @@ export default function ManageOrders() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortOption, setSortOption] = useState("Newest");
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   // Helper to add notification only once
   const addNotification = (notif) => {
@@ -29,8 +30,8 @@ export default function ManageOrders() {
       setLoading(true);
 
       
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders`);
-      const productsRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
+      const res = await axios.get(`${apiUrl}/api/orders`);
+      const productsRes = await axios.get(`${apiUrl}/api/products`);
       const productsMap = {};
       productsRes.data.forEach((p) => (productsMap[p._id] = p));
 
@@ -90,7 +91,7 @@ export default function ManageOrders() {
 
   const updateStatus = async (id, newStatus) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/orders/${id}/status`, {
+      await axios.put(`${apiUrl}/api/orders/${id}/status`, {
         status: newStatus,
       });
       toast.success("Order status updated");
@@ -138,7 +139,7 @@ export default function ManageOrders() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${import.meta.env.VITE_API_URL}/api/orders/${id}`);
+          await axios.delete(`${apiUrl}/api/orders/${id}`);
           setOrders((prev) => prev.filter((order) => order._id !== id));
           Swal.fire({
             title: "Deleted!",

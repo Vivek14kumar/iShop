@@ -6,6 +6,7 @@ export default function MyOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   const stages = ["Ordered", "Processing", "Out for Delivered", "Delivered"]; // Adjust as needed
 
@@ -15,14 +16,14 @@ export default function MyOrders() {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user?.email) return;
 
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/user/${user.email}`);
+        const res = await axios.get(`${apiUrl}/api/orders/user/${user.email}`);
         const ordersData = res.data;
 
         const ordersWithProducts = await Promise.all(
           ordersData.map(async (order) => {
             const itemsWithDetails = await Promise.all(
               order.cartItems.map(async (item) => {
-                const prodRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${item.productId}`);
+                const prodRes = await axios.get(`${apiUrl}/api/products/${item.productId}`);
                 return { ...item, product: prodRes.data };
               })
             );

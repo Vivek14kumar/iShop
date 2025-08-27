@@ -39,7 +39,8 @@ export default function ManageProducts() {
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+  
   const fetchProducts = async () => {
     setLoading(true);
     try {

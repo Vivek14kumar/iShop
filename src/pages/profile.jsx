@@ -28,6 +28,7 @@ export default function Profile() {
   const [currentAddress, setCurrentAddress] = useState({});
   const [addressModalOpen, setAddressModalOpen] = useState(false);
   const [loadingUser, setLoadingUser] = useState(true);
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   // ---------- helpers ----------
   const normalizeOrders = (data) => {
@@ -96,7 +97,7 @@ export default function Profile() {
       const userId = user?.id || user?._id;
       if (!userId) return;
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/${userId}`);
+        const res = await axios.get(`${apiUrl}/api/users/${userId}`);
         setUser(res.data);
         setFormData({
           name: res.data.name || "",
@@ -111,6 +112,7 @@ export default function Profile() {
     };
     fetchUserData();
   }, [user?.id, user?._id]);
+  console.log("Fetching orders for user:", user);
 
   // ---------- fetch orders with product details ----------
   const fetchOrdersWithProducts = async () => {
@@ -118,7 +120,7 @@ export default function Profile() {
 
     try {
       setLoadingOrders(true);
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/user/${user.email}`);
+      const res = await axios.get(`${apiUrl}/api/orders/user/${user.email}`);
       const ordersData = normalizeOrders(res.data);
 
       // Fetch product details for each cartItem
@@ -127,7 +129,7 @@ export default function Profile() {
           const items = await Promise.all(
             order.cartItems.map(async (item) => {
               try {
-                const prodRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${item.productId}`);
+                const prodRes = await axios.get(`${apiUrl}/api/products/${item.productId}`);
                 return {
                   ...item,
                   name: prodRes.data.name,
@@ -165,7 +167,7 @@ export default function Profile() {
 
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/users/account/${userId}`,
+        `${apiUrl}/api/users/account/${userId}`,
         formData
       );
       setUser(res.data);
@@ -187,12 +189,14 @@ export default function Profile() {
       let res;
       if (currentAddress._id) {
         res = await axios.put(
-          `${import.meta.env.VITE_API_URL}/api/users/${userId}/addresses/${currentAddress._id}`,
+          `${apiUrl}/api/users/${userId}/addresses/${currentAddress._id}`,
           currentAddress
         );
       } else {
+        console.log("Posting address:", currentAddress);
+
         res = await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/users/${userId}/addresses`,
+          `${apiUrl}/api/users/${userId}/addresses`,
           currentAddress
         );
       }
@@ -229,7 +233,7 @@ export default function Profile() {
 
     try {
       const res = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/api/users/${userId}/addresses/${id}`
+        `${apiUrl}/api/users/${userId}/addresses/${id}`
       );
       const updatedAddresses = Array.isArray(res.data) ? res.data : [];
       const updatedUser = { ...user, addresses: updatedAddresses };
@@ -266,7 +270,7 @@ const handleCancelOrder = async (orderId) => {
   if (!confirm.isConfirmed) return;
 
   try {
-    const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}/cancel`);
+    const res = await axios.put(`${apiUrl}/api/orders/${orderId}/cancel`);
     
     // Update state with new order status
     setOrders((prev) =>

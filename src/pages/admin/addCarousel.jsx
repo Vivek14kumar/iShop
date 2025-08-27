@@ -13,6 +13,7 @@ export default function CarouselManager() {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [sizeValid, setSizeValid] = useState(false);
   const formRef = useRef(null);
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   // Recommended size
   const RECOMMENDED_WIDTH = 1920;
@@ -21,7 +22,8 @@ export default function CarouselManager() {
   // Fetch carousel images
   const fetchCarousels = async () => {
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/carousels`);
+      
+      const { data } = await axios.get(`${apiUrl}/api/carousels`);
       setCarousels(data);
     } catch (error) {
       console.error(error);
@@ -74,12 +76,12 @@ export default function CarouselManager() {
       formData.append("title", title);
 
       if (editId) {
-        await axios.put(`${import.meta.env.VITE_API_URL}/api/carousels/${editId}`, formData, {
+        await axios.put(`${apiUrl}/api/carousels/${editId}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Carousel updated successfully");
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/carousels`, formData, {
+        await axios.post(`${apiUrl}/api/carousels`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Carousel image added successfully");
@@ -124,7 +126,7 @@ export default function CarouselManager() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${import.meta.env.VITE_API_URL}/api/carousels/${id}`);
+          await axios.delete(`${apiUrl}/api/carousels/${id}`);
           fetchCarousels();
           Swal.fire({
             title: "Deleted!",
@@ -257,7 +259,7 @@ export default function CarouselManager() {
                 className="bg-white border rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1"
               >
                 <img
-                  src={`http://localhost:5000${c.image}`}
+                  src={`${apiUrl}${c.image}`}
                   alt={c.title}
                   className="w-full h-40 object-cover rounded-t-xl"
                 />

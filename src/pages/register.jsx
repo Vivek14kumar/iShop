@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 const Register = () => {
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   //  Validation schema
   const validationSchema = Yup.object({
@@ -33,7 +34,7 @@ const Register = () => {
     };
 
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/register`,
+        `${apiUrl}/api/auth/register`,
         values,
         { withCredentials: true }
       );
@@ -98,7 +99,6 @@ const Register = () => {
                   type="text"
                   name="name"
                   className="w-full p-2 border border-gray-400 rounded-sm"
-                  onBlur={(e) => setFieldValue("name", e.target.value.trim())}
                 />
                 <ErrorMessage
                   name="name"
@@ -114,7 +114,6 @@ const Register = () => {
                   type="email"
                   name="email"
                   className="w-full p-2 border border-gray-400 rounded-sm"
-                  onBlur={(e) => setFieldValue("email", e.target.value.trim())}
                 />
                 <ErrorMessage
                   name="email"
@@ -131,7 +130,6 @@ const Register = () => {
                   name="mobile"
                   placeholder="10-digit mobile number"
                   className="w-full p-2 border border-gray-400 rounded-sm"
-                  onBlur={(e) => setFieldValue("mobile", e.target.value.trim())}
                 />
                 <ErrorMessage
                   name="mobile"
@@ -148,7 +146,6 @@ const Register = () => {
                   name="password"
                   placeholder="At least 6 characters"
                   className="w-full p-2 border border-gray-400 rounded-sm"
-                  onBlur={(e) => setFieldValue("password", e.target.value.trim())}
                 />
                 <ErrorMessage
                   name="password"

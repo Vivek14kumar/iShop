@@ -12,10 +12,12 @@ export default function CategoryManager() {
   const [editId, setEditId] = useState(null);
   const formRef = useRef(null);
   const nameInputRef = useRef(null);
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   // Fetch categories
   const fetchCategories = async () => {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`);
+    
+    const res = await axios.get(`${apiUrl}/api/categories`);
     setCategories(res.data);
   };
 
@@ -97,7 +99,7 @@ export default function CategoryManager() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${import.meta.env.VITE_API_URL}/api/categories/${id}`);
+          await axios.delete(`${apiUrl}/api/categories/${id}`);
           fetchCategories();
 
           Swal.fire({
@@ -204,7 +206,7 @@ export default function CategoryManager() {
                   {cat.image && (
                    <div className="w-20 h-20 relative rounded overflow-hidden bg-gray-100 flex items-center justify-center">
                     <img
-                      src={`${import.meta.env.VITE_API_URL}${cat.image}`}
+                      src={`${apiUrl}${cat.image}`}
                       alt={cat.name}
                       className="absolute inset-0 w-full h-full object-contain rounded"
                     />
@@ -242,7 +244,7 @@ export default function CategoryManager() {
           {/* Image */}
           {cat.image && (
            <img
-                src={`${import.meta.env.VITE_API_URL}${cat.image}`}
+                src={`${apiUrl}${cat.image}`}
                 alt={cat.name}
                 className="w-full h-40 object-contain rounded mb-3 bg-gray-100 "
               />

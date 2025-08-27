@@ -133,11 +133,12 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
+      const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
       const [usersRes, productsRes, ordersRes, dealsRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL}/api/users`),
-        axios.get(`${import.meta.env.VITE_API_URL}/api/products`),
-        axios.get(`${import.meta.env.VITE_API_URL}/api/orders`),
-        axios.get(`${import.meta.env.VITE_API_URL}/api/todaysDeals`),
+        axios.get(`${apiUrl}/api/users`),
+        axios.get(`${apiUrl}/api/products`),
+        axios.get(`${apiUrl}/api/orders`),
+        axios.get(`${apiUrl}/api/todaysDeals`),
       ]);
 
       const usersArr = extractArray(usersRes);
@@ -147,9 +148,10 @@ export default function AdminDashboard() {
 
       // attach deals to products
       const productsWithDeals = productsRes.data.map((p) => {
-        const deal = dealsRes.data.find((d) => d.product._id === p._id); //  fix: compare IDs
-        return { ...p, isDeal: !!deal, deal };
-      });
+  const deal = dealsRes.data.find((d) => d.product?._id === p._id);
+  return { ...p, isDeal: !!deal, deal };
+});
+
 
       // compute totals
       const totalRevenue = ordersArr.reduce((sum, o) => {

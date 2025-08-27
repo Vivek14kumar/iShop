@@ -7,11 +7,11 @@ export default function Home() {
   const [deals, setDeals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
   useEffect(() => {
   const fetchData = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
       const [catRes, carRes, dealRes] = await Promise.all([
         fetch(`${apiUrl}/api/categories`),
@@ -83,7 +83,7 @@ export default function Home() {
               {carousel.map((c) => (
                 <img
                   key={c._id}
-                  src={`${import.meta.env.VITE_API_URL}${c.image}`}
+                  src={`${apiUrl}${c.image}`}
                   alt={c.title}
                   className="w-full h-full object-cover"
                 />
@@ -121,7 +121,7 @@ export default function Home() {
               >
                 <div className="flex items-center justify-center w-full h-32 bg-white">
                   <img
-                    src={`${import.meta.env.VITE_API_URL}${category.image}`}
+                    src={`${apiUrl}${category.image}`}
                     alt={category.name}
                     className="max-h-full max-w-full object-contain rounded"
                   />

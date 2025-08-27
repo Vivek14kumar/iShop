@@ -30,18 +30,34 @@ const app = express();
 const server = http.createServer(app);
 
 const allowedOrigins = [
-  "http://localhost:5173", // local dev
-  "https://lucent-hotteok-52f84d.netlify.app", // Netlify frontend
+  process.env.FRONTEND_URL,
+  process.env.FRONTEND_URL_PROD,
 ];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow curl/postman
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS: " + origin));
+      }
+    },
+    credentials: true,
+  })
+);
+
 
 // Setup Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins, // frontend
-    methods: ["GET", "POST","PUT", "DELETE"],
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   },
 });
+
 
 // Store io in app.locals (so routes can use it)
 app.locals.io = io;

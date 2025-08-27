@@ -19,12 +19,13 @@ export default function Login() {
   // Handle submit
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
+      const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        `${apiUrl}/api/auth/login`,
         values,
         { withCredentials: true }
       );
-
+      
       const { user, token } = res.data;
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
