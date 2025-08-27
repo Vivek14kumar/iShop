@@ -21,17 +21,28 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Fetch categories from backend
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/categories");
+        // Use env variable or fallback to production URL
+        const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+        const res = await fetch(`${apiUrl}/api/categories`);
+
+        // Check if the response is JSON
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          const text = await res.text();
+          console.error("Expected JSON but got HTML:", text);
+          return;
+        }
+
         const data = await res.json();
         setCategories(["All", ...data.map((c) => c.name)]);
       } catch (err) {
         console.error("Error fetching categories:", err);
       }
     };
+
     fetchCategories();
   }, []);
 

@@ -8,31 +8,44 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Fetch categories, carousel, and deals
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [catRes, carRes, dealRes] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_URL}/api/categories`),
-          fetch(`${import.meta.env.VITE_API_URL}/api/carousels`),
-          fetch(`${import.meta.env.VITE_API_URL}/api/todaysDeals`),
-        ]);
+  const fetchData = async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
-        const cats = await catRes.json();
-        const cars = await carRes.json();
-        const dealsData = await dealRes.json();
+      const [catRes, carRes, dealRes] = await Promise.all([
+        fetch(`${apiUrl}/api/categories`),
+        fetch(`${apiUrl}/api/carousels`),
+        fetch(`${apiUrl}/api/todaysDeals`),
+      ]);
 
-        setCategories(cats);
-        setCarousel(cars);
-        setDeals(dealsData);
-      } catch (err) {
-        console.error("Error fetching:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+      // Helper to safely parse JSON
+      const safeJson = async (res) => {
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          const text = await res.text();
+          console.error("Expected JSON but got HTML:", text);
+          return [];
+        }
+        return res.json();
+      };
+
+      const cats = await safeJson(catRes);
+      const cars = await safeJson(carRes);
+      const dealsData = await safeJson(dealRes);
+
+      setCategories(cats);
+      setCarousel(cars);
+      setDeals(dealsData);
+    } catch (err) {
+      console.error("Error fetching:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
 
   // Auto slide effect
   useEffect(() => {
