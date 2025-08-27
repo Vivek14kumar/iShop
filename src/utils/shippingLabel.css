@@ -1,0 +1,30 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #shipping-label,
+  #shipping-label * {
+    visibility: visible;
+  }
+
+  /* Remove modal background overlay */
+  .bg-black {
+    background: none !important;
+  }
+
+  /* Position the label cleanly */
+  #shipping-label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Hide buttons (extra safety if Tailwind `print:hidden` fails) */
+  #shipping-label button {
+    display: none !important;
+  }
+}
