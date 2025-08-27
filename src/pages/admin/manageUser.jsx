@@ -31,7 +31,7 @@ export default function ManageUsers() {
 
   async function fetchUsers() {
     try {
-      const res = await axios.get("http://localhost:5000/api/users");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/users`);
       setUsers(res.data);
       setFilteredUsers(res.data);
       const adminCount = res.data.filter(u => u.role === "admin").length;
@@ -72,7 +72,7 @@ export default function ManageUsers() {
     }).then(async result => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/api/users/${userId}`);
+          await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${userId}`);
           Swal.fire({
             title: "Deleted!",
             text: "User deleted successfully.",
@@ -90,7 +90,7 @@ export default function ManageUsers() {
 
   async function resetPassword(userId) {
     try {
-      await axios.post(`http://localhost:5000/api/users/${userId}/reset-password`);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/users/${userId}/reset-password`);
       toast.success("Password reset successfully!");
     } catch {
       toast.error("Failed to reset password");
@@ -142,11 +142,11 @@ export default function ManageUsers() {
 
   async function fetchOrders(email) {
   try {
-    const res = await axios.get(`http://localhost:5000/api/orders/user/${email}`);
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/user/${email}`);
     const ordersData = res.data;
 
     // Fetch all products
-    const productsRes = await axios.get("http://localhost:5000/api/products");
+    const productsRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
     const products = productsRes.data;
 
     // Map product names to cartItems
@@ -172,7 +172,7 @@ export default function ManageUsers() {
 
   async function saveUser() {
     try {
-      await axios.put(`http://localhost:5000/api/users/${selectedUser._id}`, selectedUser);
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/${selectedUser._id}`, selectedUser);
       toast.success("User updated successfully!");
       setSelectedUser(null);
       setEditMode(false);
@@ -611,7 +611,7 @@ export default function ManageUsers() {
                   <button
                     onClick={async () => {
                       try {
-                        await axios.post(`http://localhost:5000/api/users/${selectedUser._id}/reset-password`, { newPassword });
+                        await axios.post(`${import.meta.env.VITE_API_URL}/api/users/${selectedUser._id}/reset-password`, { newPassword });
                         toast.success("Password reset successfully!");
                         setShowResetModal(false);
                         setNewPassword("");

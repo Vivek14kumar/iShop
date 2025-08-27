@@ -13,9 +13,9 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const [catRes, carRes, dealRes] = await Promise.all([
-          fetch("http://localhost:5000/api/categories"),
-          fetch("http://localhost:5000/api/carousels"),
-          fetch("http://localhost:5000/api/todaysDeals"),
+          fetch(`${import.meta.env.VITE_API_URL}/api/categories`),
+          fetch(`${import.meta.env.VITE_API_URL}/api/carousels`),
+          fetch(`${import.meta.env.VITE_API_URL}/api/todaysDeals`),
         ]);
 
         const cats = await catRes.json();
@@ -70,7 +70,7 @@ export default function Home() {
               {carousel.map((c) => (
                 <img
                   key={c._id}
-                  src={`http://localhost:5000${c.image}`}
+                  src={`${import.meta.env.VITE_API_URL}${c.image}`}
                   alt={c.title}
                   className="w-full h-full object-cover"
                 />
@@ -108,7 +108,7 @@ export default function Home() {
               >
                 <div className="flex items-center justify-center w-full h-32 bg-white">
                   <img
-                    src={`http://localhost:5000${category.image}`}
+                    src={`${import.meta.env.VITE_API_URL}${category.image}`}
                     alt={category.name}
                     className="max-h-full max-w-full object-contain rounded"
                   />

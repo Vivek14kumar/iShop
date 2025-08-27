@@ -33,7 +33,7 @@ const Register = () => {
     };
 
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${import.meta.env.VITE_API_URL}/api/auth/register`,
         values,
         { withCredentials: true }
       );
@@ -73,11 +73,11 @@ const Register = () => {
             iShop
           </Link>
         </div>
-        {/* Amazon logo 
+        {/*  logo 
         <div className="flex justify-center mb-4">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
-            alt="Amazon"
+            src={iShop}
+            alt="iShop"
             className="h-8"
           />
         </div>*/}
@@ -173,7 +173,7 @@ const Register = () => {
               >
                 {isSubmitting
                   ? "Creating account..."
-                  : "Create your Amazon account"}
+                  : "Create your account"}
               </button>
             </Form>
           )}
@@ -181,7 +181,7 @@ const Register = () => {
 
         {/* Terms */}
         <p className="text-xs text-gray-600 mt-4">
-          By creating an account, you agree to Amazon's{" "}
+          By creating an account, you agree to iShop's{" "}
           <span className="text-blue-600 cursor-pointer">Conditions of Use</span>{" "}
           and{" "}
           <span className="text-blue-600 cursor-pointer">Privacy Notice</span>.

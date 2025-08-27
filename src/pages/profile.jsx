@@ -96,7 +96,7 @@ export default function Profile() {
       const userId = user?.id || user?._id;
       if (!userId) return;
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/${userId}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/${userId}`);
         setUser(res.data);
         setFormData({
           name: res.data.name || "",
@@ -118,7 +118,7 @@ export default function Profile() {
 
     try {
       setLoadingOrders(true);
-      const res = await axios.get(`http://localhost:5000/api/orders/user/${user.email}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/user/${user.email}`);
       const ordersData = normalizeOrders(res.data);
 
       // Fetch product details for each cartItem
@@ -127,7 +127,7 @@ export default function Profile() {
           const items = await Promise.all(
             order.cartItems.map(async (item) => {
               try {
-                const prodRes = await axios.get(`http://localhost:5000/api/products/${item.productId}`);
+                const prodRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${item.productId}`);
                 return {
                   ...item,
                   name: prodRes.data.name,
@@ -165,7 +165,7 @@ export default function Profile() {
 
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/users/account/${userId}`,
+        `${import.meta.env.VITE_API_URL}/api/users/account/${userId}`,
         formData
       );
       setUser(res.data);
@@ -187,12 +187,12 @@ export default function Profile() {
       let res;
       if (currentAddress._id) {
         res = await axios.put(
-          `http://localhost:5000/api/users/${userId}/addresses/${currentAddress._id}`,
+          `${import.meta.env.VITE_API_URL}/api/users/${userId}/addresses/${currentAddress._id}`,
           currentAddress
         );
       } else {
         res = await axios.post(
-          `http://localhost:5000/api/users/${userId}/addresses`,
+          `${import.meta.env.VITE_API_URL}/api/users/${userId}/addresses`,
           currentAddress
         );
       }
@@ -229,7 +229,7 @@ export default function Profile() {
 
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/users/${userId}/addresses/${id}`
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/addresses/${id}`
       );
       const updatedAddresses = Array.isArray(res.data) ? res.data : [];
       const updatedUser = { ...user, addresses: updatedAddresses };
@@ -266,7 +266,7 @@ const handleCancelOrder = async (orderId) => {
   if (!confirm.isConfirmed) return;
 
   try {
-    const res = await axios.put(`http://localhost:5000/api/orders/${orderId}/cancel`);
+    const res = await axios.put(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}/cancel`);
     
     // Update state with new order status
     setOrders((prev) =>

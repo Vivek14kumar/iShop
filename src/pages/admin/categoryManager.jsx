@@ -15,7 +15,7 @@ export default function CategoryManager() {
 
   // Fetch categories
   const fetchCategories = async () => {
-    const res = await axios.get("http://localhost:5000/api/categories");
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`);
     setCategories(res.data);
   };
 
@@ -40,13 +40,13 @@ export default function CategoryManager() {
 
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/api/categories/${editId}`, formData, {
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/categories/${editId}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Category Updated");
         setEditId(null);
       } else {
-        await axios.post("http://localhost:5000/api/categories", formData, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/categories`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Category added!");
@@ -62,7 +62,7 @@ export default function CategoryManager() {
   const handleEdit = (category) => {
     setName(category.name);
     setEditId(category._id);
-    setPreview(category.image ? `http://localhost:5000${category.image}` : null);
+    setPreview(category.image ? `${import.meta.env.VITE_API_URL}${category.image}` : null);
 
     formRef.current.scrollIntoView({ behavior: "smooth" });
 
@@ -97,7 +97,7 @@ export default function CategoryManager() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/api/categories/${id}`);
+          await axios.delete(`${import.meta.env.VITE_API_URL}/api/categories/${id}`);
           fetchCategories();
 
           Swal.fire({
@@ -204,7 +204,7 @@ export default function CategoryManager() {
                   {cat.image && (
                    <div className="w-20 h-20 relative rounded overflow-hidden bg-gray-100 flex items-center justify-center">
                     <img
-                      src={`http://localhost:5000${cat.image}`}
+                      src={`${import.meta.env.VITE_API_URL}${cat.image}`}
                       alt={cat.name}
                       className="absolute inset-0 w-full h-full object-contain rounded"
                     />
@@ -242,7 +242,7 @@ export default function CategoryManager() {
           {/* Image */}
           {cat.image && (
            <img
-                src={`http://localhost:5000${cat.image}`}
+                src={`${import.meta.env.VITE_API_URL}${cat.image}`}
                 alt={cat.name}
                 className="w-full h-40 object-contain rounded mb-3 bg-gray-100 "
               />

@@ -45,7 +45,7 @@ export default function TodaysDeals() {
   // Fetch categories
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/categories");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`);
       setCategories(res.data);
     } catch {
       toast.error("Failed to fetch categories");
@@ -56,7 +56,7 @@ export default function TodaysDeals() {
   const fetchProducts = async (categoryName) => {
     try {
       const res = await axios.get(
-     `http://localhost:5000/api/products/category/${categoryName}`
+     `${import.meta.env.VITE_API_URL}/api/products/category/${categoryName}`
    );
    setProducts(res.data);
     } catch {
@@ -96,7 +96,7 @@ export default function TodaysDeals() {
       setPreview(
         product.image.startsWith("http")
           ? product.image
-          : `http://localhost:5000${product.image}`
+          : `${import.meta.env.VITE_API_URL}${product.image}`
       );
     } else {
       setPreview(null);
@@ -116,12 +116,12 @@ export default function TodaysDeals() {
     try {
       if (editingId) {
         await axios.put(
-          `http://localhost:5000/api/todaysDeals/${editingId}`,
+          `${import.meta.env.VITE_API_URL}/api/todaysDeals/${editingId}`,
           formData
         );
         toast.success("Deal updated successfully!");
       } else {
-        await axios.post("http://localhost:5000/api/todaysDeals", formData);
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/todaysDeals`, formData);
         toast.success("Deal added successfully!");
       }
 
@@ -165,7 +165,7 @@ const handleEdit = async (deal) => {
   setPreview(
     deal.image.startsWith("http")
       ? deal.image
-      : `http://localhost:5000${deal.image}`
+      : `${import.meta.env.VITE_API_URL}${deal.image}`
   );
   toast.info("Editing deal");
 };
@@ -184,7 +184,7 @@ const handleEdit = async (deal) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/api/todaysDeals/${id}`);
+          await axios.delete(`${import.meta.env.VITE_API_URL}/api/todaysDeals/${id}`);
           Swal.fire({
             title: "Deleted!",
             text: "The deal has been deleted.",

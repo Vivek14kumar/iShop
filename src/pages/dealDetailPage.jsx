@@ -27,7 +27,7 @@ export default function DealDetailPage() {
   useEffect(() => {
     async function fetchDeal() {
       try {
-        const res = await axios.get(`http://localhost:5000/api/todaysDeals/${dealId}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/todaysDeals/${dealId}`);
         setDeal(res.data);
         setSelectedImage(res.data.image || res.data.product.image);
       } catch (err) {

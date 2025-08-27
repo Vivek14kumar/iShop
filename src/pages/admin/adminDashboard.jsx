@@ -134,10 +134,10 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const [usersRes, productsRes, ordersRes, dealsRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/users"),
-        axios.get("http://localhost:5000/api/products"),
-        axios.get("http://localhost:5000/api/orders"),
-        axios.get("http://localhost:5000/api/todaysDeals"),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/users`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/products`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/orders`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/todaysDeals`),
       ]);
 
       const usersArr = extractArray(usersRes);

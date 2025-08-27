@@ -15,14 +15,14 @@ export default function MyOrders() {
         const user = JSON.parse(localStorage.getItem("user"));
         if (!user?.email) return;
 
-        const res = await axios.get(`http://localhost:5000/api/orders/user/${user.email}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/user/${user.email}`);
         const ordersData = res.data;
 
         const ordersWithProducts = await Promise.all(
           ordersData.map(async (order) => {
             const itemsWithDetails = await Promise.all(
               order.cartItems.map(async (item) => {
-                const prodRes = await axios.get(`http://localhost:5000/api/products/${item.productId}`);
+                const prodRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${item.productId}`);
                 return { ...item, product: prodRes.data };
               })
             );

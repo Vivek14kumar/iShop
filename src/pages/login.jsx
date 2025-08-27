@@ -20,7 +20,7 @@ export default function Login() {
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
         values,
         { withCredentials: true }
       );
@@ -49,11 +49,11 @@ export default function Login() {
           </Link>
         </div>
         
-        {/* Amazon logo 
+        {/*  logo 
         <div className="flex justify-center mb-4">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
-            alt="Amazon"
+            src={iShop}
+            alt="logo"
             className="h-8"
           />
         </div>*/}
@@ -127,7 +127,7 @@ export default function Login() {
         <div className="w-full mt-6 text-center">
           <div className="flex items-center">
             <hr className="flex-grow border-gray-300" />
-            <span className="px-2 text-gray-500 text-sm">New to Amazon?</span>
+            <span className="px-2 text-gray-500 text-sm">New to iShop?</span>
             <hr className="flex-grow border-gray-300" />
           </div>
 
@@ -135,7 +135,7 @@ export default function Login() {
             to="/register"
             className="block mt-4 w-full bg-gray-200 hover:bg-gray-300 text-black font-medium py-2 rounded-full"
           >
-            Create your Amazon account
+            Create your account
           </Link>
         </div>
       </div>

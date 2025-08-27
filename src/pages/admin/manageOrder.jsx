@@ -29,8 +29,8 @@ export default function ManageOrders() {
       setLoading(true);
 
       
-      const res = await axios.get("http://localhost:5000/api/orders");
-      const productsRes = await axios.get("http://localhost:5000/api/products");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders`);
+      const productsRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
       const productsMap = {};
       productsRes.data.forEach((p) => (productsMap[p._id] = p));
 
@@ -90,7 +90,7 @@ export default function ManageOrders() {
 
   const updateStatus = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/orders/${id}/status`, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/orders/${id}/status`, {
         status: newStatus,
       });
       toast.success("Order status updated");
@@ -138,7 +138,7 @@ export default function ManageOrders() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/api/orders/${id}`);
+          await axios.delete(`${import.meta.env.VITE_API_URL}/api/orders/${id}`);
           setOrders((prev) => prev.filter((order) => order._id !== id));
           Swal.fire({
             title: "Deleted!",

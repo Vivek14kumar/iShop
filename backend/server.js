@@ -29,11 +29,16 @@ const app = express();
 // HTTP server wrapper (needed for socket.io)
 const server = http.createServer(app);
 
+const allowedOrigins = [
+  "http://localhost:5173", // local dev
+  "https://lucent-hotteok-52f84d.netlify.app", // Netlify frontend
+];
+
 // Setup Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // frontend
-    methods: ["GET", "POST"],
+    origin: allowedOrigins, // frontend
+    methods: ["GET", "POST","PUT", "DELETE"],
     credentials: true,
   },
 });
@@ -56,7 +61,7 @@ io.on("connection", (socket) => {
 });
 
 // Middleware
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 
 //  Path setup
@@ -78,5 +83,5 @@ app.use('/api/users', userAccountRoutes);
 // Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () =>
-  console.log(`Server + WebSocket running on http://localhost:${PORT}`)
+  console.log(`Server + WebSocket running on ${PORT}`)
 );

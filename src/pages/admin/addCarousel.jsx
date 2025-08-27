@@ -21,7 +21,7 @@ export default function CarouselManager() {
   // Fetch carousel images
   const fetchCarousels = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/carousels");
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/carousels`);
       setCarousels(data);
     } catch (error) {
       console.error(error);
@@ -74,12 +74,12 @@ export default function CarouselManager() {
       formData.append("title", title);
 
       if (editId) {
-        await axios.put(`http://localhost:5000/api/carousels/${editId}`, formData, {
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/carousels/${editId}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Carousel updated successfully");
       } else {
-        await axios.post("http://localhost:5000/api/carousels", formData, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/carousels`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Carousel image added successfully");
@@ -124,7 +124,7 @@ export default function CarouselManager() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/api/carousels/${id}`);
+          await axios.delete(`${import.meta.env.VITE_API_URL}/api/carousels/${id}`);
           fetchCarousels();
           Swal.fire({
             title: "Deleted!",

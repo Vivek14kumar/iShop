@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// 🔑 Pre-save middleware to auto-generate userId
+//  Pre-save middleware to auto-generate userId
 userSchema.pre("save", async function (next) {
   if (!this.userId) {
     // Example format: USR-20250819-XYZ123
