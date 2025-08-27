@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: `${apiUrl}/api`,
   withCredentials: true,
 });
 
