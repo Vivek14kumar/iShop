@@ -42,13 +42,13 @@ export default function CategoryManager() {
 
     try {
       if (editId) {
-        await axios.put(`${import.meta.env.VITE_API_URL}/api/categories/${editId}`, formData, {
+        await axios.put(`${apiUrl}/api/categories/${editId}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Category Updated");
         setEditId(null);
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/categories`, formData, {
+        await axios.post(`${apiUrl}/api/categories`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Category added!");

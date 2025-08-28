@@ -83,7 +83,7 @@ export default function Home() {
               {carousel.map((c) => (
                 <img
                   key={c._id}
-                  src={`${apiUrl}${c.image}`}
+                  src={c.image.startsWith("http") ? c.image : `${apiUrl}${c.image}`}
                   alt={c.title}
                   className="w-full h-full object-cover"
                 />

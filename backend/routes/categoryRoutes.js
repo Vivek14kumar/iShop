@@ -1,22 +1,36 @@
 // routes/categoryRoutes.js
 import express from "express";
 import Category from "../models/category.js";
-import upload from "../middleware/upload.js";
+import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
 
 const router = express.Router();
+const upload = multer(); // memory storage
 
 // Generate new category ID
 async function generateCategoryId() {
   const lastCategory = await Category.findOne().sort({ categoryId: -1 });
-
-  if (!lastCategory) {
-    return "CAT0001";
-  }
+  if (!lastCategory) return "CAT0001";
 
   const lastNumber = parseInt(lastCategory.categoryId.replace("CAT", ""), 10);
   const newNumber = lastNumber + 1;
   return `CAT${String(newNumber).padStart(4, "0")}`;
 }
+
+// Helper: upload to Cloudinary
+const uploadToCloudinary = (fileBuffer) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "carspa" },
+      (error, result) => {
+        if (result) resolve(result.secure_url);
+        else reject(error);
+      }
+    );
+    streamifier.createReadStream(fileBuffer).pipe(stream);
+  });
+};
 
 // Get all categories
 router.get("/", async (req, res) => {
@@ -33,11 +47,16 @@ router.get("/", async (req, res) => {
 router.post("/", upload.single("image"), async (req, res) => {
   try {
     const categoryId = await generateCategoryId();
+    let imageUrl = "";
+
+    if (req.file) {
+      imageUrl = await uploadToCloudinary(req.file.buffer);
+    }
 
     const category = new Category({
       categoryId,
       name: req.body.name,
-      image: req.file ? `/uploads/${req.file.filename}` : "",
+      image: imageUrl,
     });
 
     const savedCategory = await category.save();
@@ -51,12 +70,11 @@ router.post("/", upload.single("image"), async (req, res) => {
 // Update category
 router.put("/:id", upload.single("image"), async (req, res) => {
   try {
-    const updatedData = {
-      name: req.body.name,
-    };
+    let updatedData = { name: req.body.name };
 
     if (req.file) {
-      updatedData.image = `/uploads/${req.file.filename}`;
+      const imageUrl = await uploadToCloudinary(req.file.buffer);
+      updatedData.image = imageUrl;
     }
 
     const category = await Category.findByIdAndUpdate(

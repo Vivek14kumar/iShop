@@ -265,7 +265,7 @@ export default function CarouselManager() {
                 className="bg-white border rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1"
               >
                 <img
-                  src={`${apiUrl}${c.image}`}
+                  src={c.image.startsWith("http") ? c.image : `${apiUrl}${c.image}`}
                   alt={c.title}
                   className="w-full h-40 object-cover rounded-t-xl"
                 />
