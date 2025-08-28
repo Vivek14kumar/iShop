@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import Product from "../models/Product.js"; // your mongoose product model
+import Product from "../models/product.js"; // your mongoose product model
 
 const router = express.Router();
 
