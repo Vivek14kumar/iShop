@@ -206,7 +206,7 @@ export default function CategoryManager() {
                   {cat.image && (
                    <div className="w-20 h-20 relative rounded overflow-hidden bg-gray-100 flex items-center justify-center">
                     <img
-                      src={`${apiUrl}${cat.image}`}
+                      src={cat.image}
                       alt={cat.name}
                       className="absolute inset-0 w-full h-full object-contain rounded"
                     />
@@ -244,7 +244,7 @@ export default function CategoryManager() {
           {/* Image */}
           {cat.image && (
            <img
-                src={`${apiUrl}${cat.image}`}
+                src={cat.image}
                 alt={cat.name}
                 className="w-full h-40 object-contain rounded mb-3 bg-gray-100 "
               />
