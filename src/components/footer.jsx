@@ -59,10 +59,30 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between text-sm">
         <p>&copy; {new Date().getFullYear()} iShop. All rights reserved.</p>
         <div className="flex space-x-4 mt-2 md:mt-0">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" className="h-6"/>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/MasterCard_Logo.svg" alt="Mastercard" className="h-6"/>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-6"/>
-        </div>
+  {/* Visa */}
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg"
+    alt="Visa"
+    className="h-6"
+  />
+  
+  {/* RuPay */}
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/5/59/RuPay_logo.svg"
+    alt="RuPay"
+    className="h-6"
+  />
+
+  {/* UPI */}
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg"
+    alt="UPI"
+    className="h-6"
+  />
+
+   
+</div>
+
       </div>
     </footer>
   );

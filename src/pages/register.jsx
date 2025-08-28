@@ -8,82 +8,63 @@ const Register = () => {
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
 
-  //  Validation schema
+  // Validation schema
   const validationSchema = Yup.object({
     name: Yup.string().required("Enter your name"),
-    email: Yup.string()
-      .email("Enter a valid email")
-      .required("Enter your email"),
+    email: Yup.string().email("Enter a valid email").required("Enter your email"),
     mobile: Yup.string()
       .matches(/^[0-9]{10}$/, "Enter a valid 10-digit mobile number")
       .required("Enter your mobile number"),
-    password: Yup.string()
-      .min(6, "At least 6 characters required")
-      .required("Enter your password"),
+    password: Yup.string().min(6, "At least 6 characters required").required("Enter your password"),
   });
 
   // Submit handler
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      // Trim values before sending
-    const cleanedValues = {
-      name: values.name.trim(),
-      email: values.email.trim(),
-      mobile: values.mobile.trim(),
-      password: values.password.trim(),
-    };
+      const cleanedValues = {
+        name: values.name.trim(),
+        email: values.email.trim(),
+        mobile: values.mobile.trim(),
+        password: values.password.trim(),
+      };
 
-      const res = await axios.post(
-        `${apiUrl}/api/auth/register`,
-        values,
-        { withCredentials: true }
-      );
+      await axios.post(`${apiUrl}/api/auth/register`, cleanedValues, { withCredentials: true });
 
-      //  Success alert
-    Swal.fire({
-      icon: "success",
-      title: "Registration Successful!",
-      text: "Redirecting to login...",
-      timer: 2000,
-      showConfirmButton: false,
-    });
-      //  redirect after short delay
-      setTimeout(() => navigate("/login"), 2000);
-
-    } catch (err) {
-      setErrors({
-        general: err.response?.data?.message || "Registration failed",
+      Swal.fire({
+        icon: "success",
+        title: "Registration Successful!",
+        text: "Redirecting to login...",
+        timer: 2000,
+        showConfirmButton: false,
       });
-      //  Error alert
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: errorMsg,
-    });
+
+      setTimeout(() => navigate("/login"), 2000);
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || "Registration failed";
+      setErrors({ general: errorMsg });
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: errorMsg,
+      });
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white border border-gray-300 rounded-md p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+
         {/* Logo */}
-        <div className="flex justify-center mb-4">
-          <Link to="/" className="text-3xl font-bold text-yellow-400 whitespace-nowrap">
+        <div className="flex justify-center mb-6">
+          <Link to="/" className="text-4xl font-extrabold text-blue-600 tracking-wide">
             iShop
           </Link>
         </div>
-        {/*  logo 
-        <div className="flex justify-center mb-4">
-          <img
-            src={iShop}
-            alt="iShop"
-            className="h-8"
-          />
-        </div>*/}
 
-        <h2 className="text-xl font-semibold mb-4">Create account</h2>
+        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Create Your Account</h2>
 
         <Formik
           initialValues={{ name: "", email: "", mobile: "", password: "" }}
@@ -91,106 +72,90 @@ const Register = () => {
           onSubmit={handleSubmit}
         >
           {({ isSubmitting, errors }) => (
-            <Form className="space-y-4">
+            <Form className="space-y-5">
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium">Your name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
                 <Field
                   type="text"
                   name="name"
-                  className="w-full p-2 border border-gray-400 rounded-sm"
+                  placeholder="Enter your full name"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
-                <ErrorMessage
-                  name="name"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
+                <ErrorMessage name="name" component="div" className="text-red-500 text-sm mt-1" />
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                 <Field
                   type="email"
                   name="email"
-                  className="w-full p-2 border border-gray-400 rounded-sm"
+                  placeholder="example@email.com"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
+                <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
               </div>
 
               {/* Mobile */}
               <div>
-                <label className="block text-sm font-medium">Mobile number</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile</label>
                 <Field
                   type="text"
                   name="mobile"
                   placeholder="10-digit mobile number"
-                  className="w-full p-2 border border-gray-400 rounded-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
-                <ErrorMessage
-                  name="mobile"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
+                <ErrorMessage name="mobile" component="div" className="text-red-500 text-sm mt-1" />
               </div>
 
               {/* Password */}
               <div>
-                <label className="block text-sm font-medium">Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                 <Field
                   type="password"
                   name="password"
                   placeholder="At least 6 characters"
-                  className="w-full p-2 border border-gray-400 rounded-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
-                <p className="text-xs text-gray-600 mt-1">
-                  Passwords must be at least 6 characters.
-                </p>
+                <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
+                <p className="text-xs text-gray-500 mt-1">Password must be at least 6 characters.</p>
               </div>
 
               {/* General error */}
-              {errors.general && (
-                <div className="text-red-600 text-sm">{errors.general}</div>
-              )}
+              {errors.general && <div className="text-red-600 text-sm text-center">{errors.general}</div>}
 
               {/* Submit button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-medium py-2 rounded-sm"
+                className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold py-2 rounded-lg shadow-md transition-all"
               >
-                {isSubmitting
-                  ? "Creating account..."
-                  : "Create your account"}
+                {isSubmitting ? "Creating account..." : "Create Account"}
               </button>
             </Form>
           )}
         </Formik>
 
         {/* Terms */}
-        <p className="text-xs text-gray-600 mt-4">
-          By creating an account, you agree to iShop's{" "}
-          <span className="text-blue-600 cursor-pointer">Conditions of Use</span>{" "}
-          and{" "}
+        <p className="text-xs text-gray-600 mt-4 text-center">
+          By creating an account, you agree to iShop’s{" "}
+          <span className="text-blue-600 cursor-pointer">Conditions of Use</span> and{" "}
           <span className="text-blue-600 cursor-pointer">Privacy Notice</span>.
         </p>
 
-        <hr className="my-4" />
+        {/* Divider */}
+        <div className="my-6 flex items-center">
+          <hr className="flex-grow border-gray-300" />
+          <span className="px-3 text-gray-400 text-sm">OR</span>
+          <hr className="flex-grow border-gray-300" />
+        </div>
 
         {/* Already have account */}
-        <p className="text-sm text-gray-700">
+        <p className="text-sm text-gray-700 text-center">
           Already have an account?{" "}
           <Link to="/login" className="text-blue-600 hover:underline">
-            Sign in
+            Sign In
           </Link>
         </p>
       </div>

@@ -92,7 +92,7 @@ const ProductDetails = () => {
               product.stock <= 0
                 ? "bg-red-500 text-white"
                 : product.stock <= 5
-                ? "bg-yellow-400 text-black"
+                ? "bg-blue-300 text-black"
                 : "bg-green-500 text-white"
             }`}
           >
@@ -135,7 +135,7 @@ const ProductDetails = () => {
             disabled={product.stock <= 0}
             className={`w-full py-2 rounded font-semibold ${
               product.stock > 0
-                ? "bg-yellow-400 hover:bg-yellow-500 text-black"
+                ? "bg-blue-300 hover:bg-blue-400 text-black"
                 : "bg-gray-300 text-gray-600 cursor-not-allowed"
             }`}
           >
@@ -147,7 +147,7 @@ const ProductDetails = () => {
             disabled={product.stock <= 0}
             className={`w-full py-2 rounded text-white font-semibold ${
               product.stock > 0
-                ? "bg-orange-500 hover:bg-orange-600"
+                ? "bg-orange-400 hover:bg-orange-500"
                 : "bg-gray-300 text-gray-600 cursor-not-allowed"
             }`}
           >

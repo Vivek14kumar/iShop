@@ -37,7 +37,7 @@ export default function CartPage() {
                 Shop today’s deals and fill it up with iShop products.
               </p>
               <button
-                className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition"
+                className="bg-blue-300 hover:bg-blue-400 text-black px-6 py-2 rounded-lg font-semibold transition"
                 onClick={() => navigate("/")}
               >
                 Continue Shopping
@@ -117,7 +117,7 @@ export default function CartPage() {
               </span>
             </h3>
             <button
-              className="w-full bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg font-semibold transition"
+              className="w-full bg-blue-300 hover:bg-blue-400 text-black px-4 py-2 rounded-lg font-semibold transition"
               onClick={() =>
                 navigate("/buy-now", {
                   state: { cartItems: cart, totalAmount: total },

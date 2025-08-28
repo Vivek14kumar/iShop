@@ -65,7 +65,7 @@ export default function ProductCard({ product }) {
       disabled={product.stock <= 0}
       className={`w-full py-1 text-sm rounded font-semibold ${
         product.stock > 0
-          ? 'bg-yellow-400 hover:bg-yellow-500 text-black'
+          ? 'bg-blue-300 hover:bg-blue-400 text-black'
           : 'bg-gray-300 text-gray-600 cursor-not-allowed'
       }`}
     >

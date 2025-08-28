@@ -84,7 +84,7 @@ export default function Navbar() {
       <header className="bg-[#131921] text-white sticky top-0 z-50 hidden md:block">
         <div className="max-w-7xl mx-auto flex items-center px-4 py-2 gap-4">
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-yellow-400 whitespace-nowrap">
+          <Link to="/" className="text-2xl font-bold text-blue-300 whitespace-nowrap">
             iShop
           </Link>
 
@@ -116,7 +116,7 @@ export default function Navbar() {
             />
             <button
               type="submit"
-              className="bg-yellow-400 text-black px-4 rounded-r-full font-bold hover:bg-yellow-500"
+              className="bg-blue-300 text-black px-4 rounded-r-full font-bold hover:bg-blue-500"
             >
               <FiSearch size={20} />
             </button>
@@ -130,7 +130,7 @@ export default function Navbar() {
                   <span className="text-xs text-gray-300">Hello, {user.name}</span>
                   <span
                     onClick={logout}
-                    className="font-bold cursor-pointer hover:text-yellow-400 flex items-center gap-1"
+                    className="font-bold cursor-pointer hover:text-blue-300 flex items-center gap-1"
                   >
                     <BiLogOut /> Logout
                   </span>
@@ -138,18 +138,18 @@ export default function Navbar() {
 
                 {!isAdmin && (
                   <>
-                    <Link to="/my-orders" className="flex flex-col hover:text-yellow-400">
+                    <Link to="/my-orders" className="flex flex-col hover:text-blue-300">
                       <span className="text-xs text-gray-300">Returns</span>
                       <span className="font-bold">& Orders</span>
                     </Link>
                     <Link
                       to="/cart"
-                      className="relative flex items-center font-bold hover:text-yellow-400"
+                      className="relative flex items-center font-bold hover:text-blue-300"
                     >
                       <AiOutlineShoppingCart size={20} />
                       <span className="ml-1">Cart</span>
                       {cart.length > 0 && (
-                        <span className="absolute -top-2 -right-3 bg-yellow-400 text-black text-xs px-2 py-0.5 rounded-full font-bold">
+                        <span className="absolute -top-2 -right-3 bg-blue-300 text-black text-xs px-2 py-0.5 rounded-full font-bold">
                           {cart.length}
                         </span>
                       )}
@@ -157,22 +157,22 @@ export default function Navbar() {
                   </>
                 )}
 
-                <Link to="/profile" className="hover:text-yellow-400 font-bold flex items-center gap-1">
+                <Link to="/profile" className="hover:text-blue-300 font-bold flex items-center gap-1">
                   <FiUser /> My Profile
                 </Link>
 
                 {isAdmin && (
-                  <Link to="/admin" className="hover:text-yellow-400 font-bold flex items-center gap-1">
+                  <Link to="/admin" className="hover:text-blue-300 font-bold flex items-center gap-1">
                     <FiSettings /> Admin Panel
                   </Link>
                 )}
               </>
             ) : (
               <>
-                <Link to="/login" className="hover:text-yellow-400 flex items-center gap-1">
+                <Link to="/login" className="hover:text-blue-300 flex items-center gap-1">
                   <FiLogIn /> Login
                 </Link>
-                <Link to="/register" className="hover:text-yellow-400 flex items-center gap-1">
+                <Link to="/register" className="hover:text-blue-300 flex items-center gap-1">
                   <FiUserPlus /> Register
                 </Link>
               </>
@@ -183,7 +183,7 @@ export default function Navbar() {
         {/* Secondary category nav */}
         <div className="bg-[#232f3e] text-sm hidden md:block">
           <div className="max-w-7xl mx-auto px-4 flex items-center gap-6 overflow-x-auto">
-            <Link to="/products" className="py-2 hover:text-yellow-400 whitespace-nowrap">
+            <Link to="/products" className="py-2 hover:text-blue-300 whitespace-nowrap">
               All Products
             </Link>
             {categories
@@ -192,7 +192,7 @@ export default function Navbar() {
                 <Link
                   key={idx}
                   to={`/products?category=${c}`} 
-                  className="py-2 hover:text-yellow-400 whitespace-nowrap"
+                  className="py-2 hover:text-blue-300 whitespace-nowrap"
                 >
                   {c}
                 </Link>
@@ -214,7 +214,7 @@ export default function Navbar() {
           </button>
 
           {/* Logo */}
-          <Link to="/" className="text-xl font-bold text-yellow-400">
+          <Link to="/" className="text-xl font-bold text-blue-300">
             iShop
           </Link>
 
@@ -227,7 +227,7 @@ export default function Navbar() {
             >
               <AiOutlineShoppingCart size={22} />
               {cart.length > 0 && (
-                <span className="absolute -top-2 -right-3 bg-yellow-400 text-black text-xs px-2 py-0.5 rounded-full font-bold">
+                <span className="absolute -top-2 -right-3 bg-blue-300 text-black text-xs px-2 py-0.5 rounded-full font-bold">
                   {cart.length}
                 </span>
               )}
@@ -316,7 +316,7 @@ export default function Navbar() {
                       logout();
                       setMenuOpen(false);
                     }}
-                    className="text-yellow-400 font-bold flex items-center gap-1"
+                    className="text-blue-300 font-bold flex items-center gap-1"
                   >
                     <BiLogOut /> Logout
                   </button>
@@ -345,7 +345,7 @@ export default function Navbar() {
                     <Link
                       key={idx}
                       to={`/products?category=${c}`} 
-                      className="hover:text-yellow-400"
+                      className="hover:text-blue-300"
                       onClick={() => setMenuOpen(false)}
                     >
                       {c}

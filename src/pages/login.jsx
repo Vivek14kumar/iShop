@@ -8,7 +8,6 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // Validation schema
   const validationSchema = Yup.object({
     identifier: Yup.string().required("Enter your email or mobile number"),
     password: Yup.string()
@@ -16,16 +15,11 @@ export default function Login() {
       .required("Enter your password"),
   });
 
-  // Handle submit
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
-      const res = await axios.post(
-        `${apiUrl}/api/auth/login`,
-        values,
-        { withCredentials: true }
-      );
-      
+      const res = await axios.post(`${apiUrl}/api/auth/login`, values, { withCredentials: true });
+
       const { user, token } = res.data;
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
@@ -40,26 +34,17 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-sm bg-white border border-gray-300 rounded-md shadow-sm p-4 sm:p-6 max-h-screen overflow-y-auto">
-
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+        
         {/* Logo */}
-        <div className="flex justify-center mb-4">
-          <Link to="/" className="text-3xl font-bold text-yellow-400 whitespace-nowrap">
+        <div className="flex justify-center mb-6">
+          <Link to="/" className="text-4xl font-extrabold text-blue-600 tracking-wide">
             iShop
           </Link>
         </div>
-        
-        {/*  logo 
-        <div className="flex justify-center mb-4">
-          <img
-            src={iShop}
-            alt="logo"
-            className="h-8"
-          />
-        </div>*/}
 
-        <h2 className="text-xl font-semibold mb-4">Sign-In</h2>
+        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Welcome Back</h2>
 
         <Formik
           initialValues={{ identifier: "", password: "" }}
@@ -67,78 +52,70 @@ export default function Login() {
           onSubmit={handleSubmit}
         >
           {({ isSubmitting, errors }) => (
-            <Form className="space-y-4">
-              {/* Email or Mobile */}
+            <Form className="space-y-5">
+              {/* Email / Mobile */}
               <div>
-                <label className="block text-sm font-medium">
-                  Email or mobile phone number
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email or Mobile Number
                 </label>
                 <Field
                   type="text"
                   name="identifier"
-                  className="w-full p-2 border border-gray-400 rounded-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
-                <ErrorMessage
-                  name="identifier"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
+                <ErrorMessage name="identifier" component="div" className="text-red-500 text-sm mt-1" />
               </div>
 
               {/* Password */}
               <div>
-                <label className="block text-sm font-medium">Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Password
+                </label>
                 <Field
                   type="password"
                   name="password"
-                  className="w-full p-2 border border-gray-400 rounded-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="text-red-500 text-sm"
-                />
+                <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
               </div>
 
               {/* General error */}
               {errors.general && (
-                <div className="text-red-600 text-sm">{errors.general}</div>
+                <div className="text-red-600 text-sm text-center">{errors.general}</div>
               )}
 
               {/* Sign-In button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-medium py-2 rounded-sm"
+                className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold py-2 rounded-lg shadow-md transition-all"
               >
-                {isSubmitting ? "Signing in..." : "Sign-In"}
+                {isSubmitting ? "Signing in..." : "Sign In"}
               </button>
             </Form>
           )}
         </Formik>
 
-        {/* Help links */}
-        <div className="mt-4 text-sm">
-          <Link to="/forgetPassword" className="text-blue-600 hover:underline cursor-pointer">
+        {/* Links */}
+        <div className="mt-4 text-sm text-center">
+          <Link to="/forgetPassword" className="text-blue-600 hover:underline">
             Forgot your password?
           </Link>
         </div>
 
-        {/* Divider + Create Account */}
-        <div className="w-full mt-6 text-center">
-          <div className="flex items-center">
-            <hr className="flex-grow border-gray-300" />
-            <span className="px-2 text-gray-500 text-sm">New to iShop?</span>
-            <hr className="flex-grow border-gray-300" />
-          </div>
-
-          <Link
-            to="/register"
-            className="block mt-4 w-full bg-gray-200 hover:bg-gray-300 text-black font-medium py-2 rounded-full"
-          >
-            Create your account
-          </Link>
+        {/* Divider + Register */}
+        <div className="my-6 flex items-center">
+          <hr className="flex-grow border-gray-300" />
+          <span className="px-3 text-gray-400 text-sm">OR</span>
+          <hr className="flex-grow border-gray-300" />
         </div>
+
+        <Link
+          to="/register"
+          className="block w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-lg text-center"
+        >
+          Create an Account
+        </Link>
       </div>
     </div>
   );
