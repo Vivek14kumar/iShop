@@ -31,7 +31,7 @@ export default function TodaysDeals() {
   //  pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
-  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 
   // Fetch deals
   const fetchDeals = async () => {

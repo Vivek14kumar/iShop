@@ -27,7 +27,7 @@ export default function ForgotPassword() {
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [passwordHint, setPasswordHint] = useState("");
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 
   const calculateStrengthAndHint = (password) => {
     let strength = 0;

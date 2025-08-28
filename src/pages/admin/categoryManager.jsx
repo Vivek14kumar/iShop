@@ -12,7 +12,7 @@ export default function CategoryManager() {
   const [editId, setEditId] = useState(null);
   const formRef = useRef(null);
   const nameInputRef = useRef(null);
-  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 
   // Fetch categories
   const fetchCategories = async () => {

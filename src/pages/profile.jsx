@@ -28,7 +28,7 @@ export default function Profile() {
   const [currentAddress, setCurrentAddress] = useState({});
   const [addressModalOpen, setAddressModalOpen] = useState(false);
   const [loadingUser, setLoadingUser] = useState(true);
-  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 
   // ---------- helpers ----------
   const normalizeOrders = (data) => {

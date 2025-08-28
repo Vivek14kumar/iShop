@@ -13,7 +13,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [tabValue, setTabValue] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 
   useEffect(() => {
     const fetchProduct = async () => {

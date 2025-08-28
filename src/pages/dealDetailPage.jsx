@@ -23,7 +23,7 @@ export default function DealDetailPage() {
   const { addToCart } = useCart(); // useCart context
   const isDealExpired = timeLeft === "Deal Expired";
   const isOutOfStock = deal?.stock <= 0;
-  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 
   useEffect(() => {
     async function fetchDeal() {

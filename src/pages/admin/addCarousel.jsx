@@ -13,7 +13,7 @@ export default function CarouselManager() {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [sizeValid, setSizeValid] = useState(false);
   const formRef = useRef(null);
-  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 
   // Recommended size
   const RECOMMENDED_WIDTH = 1920;

@@ -17,7 +17,7 @@ export default function Login() {
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+      const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
       const res = await axios.post(`${apiUrl}/api/auth/login`, values, { withCredentials: true });
 
       const { user, token } = res.data;

@@ -25,7 +25,7 @@ export default function Navbar() {
     const fetchCategories = async () => {
       try {
         // Use env variable or fallback to production URL
-        const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+        const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
         const res = await fetch(`${apiUrl}/api/categories`);
 
         // Check if the response is JSON

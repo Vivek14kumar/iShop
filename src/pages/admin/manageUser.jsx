@@ -23,7 +23,7 @@ export default function ManageUsers() {
   const [orders, setOrders] = useState([]);
   const [showResetModal, setShowResetModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
-  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+  const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 
   useEffect(() => {
     fetchUsers();

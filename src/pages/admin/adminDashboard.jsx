@@ -133,7 +133,7 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-1-le5r.onrender.com";
+      const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
       const [usersRes, productsRes, ordersRes, dealsRes] = await Promise.all([
         axios.get(`${apiUrl}/api/users`),
         axios.get(`${apiUrl}/api/products`),
