@@ -121,7 +121,7 @@ export default function Home() {
               >
                 <div className="flex items-center justify-center w-full h-32 bg-white">
                   <img
-                    src={`${apiUrl}${category.image}`}
+                    src={category.image}
                     alt={category.name}
                     className="max-h-full max-w-full object-contain rounded"
                   />
