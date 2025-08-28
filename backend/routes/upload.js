@@ -1,36 +1,41 @@
-import express from 'express';
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
+import express from "express";
+import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
 
 const router = express.Router();
 
-// Create upload directory if it doesn't exist
-const uploadDir = 'uploads';
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-
-// Multer storage config
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // e.g. 1691557690670.jpg
-  },
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const upload = multer({ storage });
+// Use memory storage
+const upload = multer();
 
 // Upload endpoint
-router.post('/upload', upload.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: 'No image uploaded' });
-  }
+router.post("/upload", upload.single("image"), async (req, res) => {
+  if (!req.file) return res.status(400).json({ message: "No image uploaded" });
 
-  const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
-  res.status(200).json({ imageUrl });
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: "carspa" }, // optional folder in Cloudinary
+        (error, result) => {
+          if (result) resolve(result);
+          else reject(error);
+        }
+      );
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
+
+    res.status(200).json({ imageUrl: result.secure_url }); // HTTPS URL
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Cloudinary upload failed" });
+  }
 });
 
 export default router;

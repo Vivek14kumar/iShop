@@ -1,35 +1,39 @@
-import express from "express"
-import multer from 'multer';
-import { CloudinaryStorage } from "multer-storage-cloudinary";
-import cloudinary from "../config/cloudinaryConfig";
+// middleware/upload.js
+import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
 
-const router = express.Router();
-
-// Configure Cloudinary storage
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "carspa",
-    format: async (req, file) => "jpeg",
-    public_id: (req, file) => `${Date.now()}-${file.originalname}`,
-  },
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const upload = multer({ storage });
+// Use memory storage
+const upload = multer();
 
-router.post("/upload", upload.single("image"), (req, res) => {
-  res.json({ url: req.file.path }); // Cloudinary HTTPS URL
-});
+// Upload controller
+export const uploadToCloudinary = async (req, res) => {
+  if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
-// Store in /uploads and rename with timestamp
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: "iShop" },
+        (error, result) => {
+          if (result) resolve(result);
+          else reject(error);
+        }
+      );
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    });
 
-/*const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});*/
+    res.json({ url: result.secure_url });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Cloudinary upload failed" });
+  }
+};
 
 export default upload;
