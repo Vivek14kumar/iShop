@@ -65,6 +65,11 @@ export default function CarouselManager() {
   // Add or update carousel
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting carousel:");
+  console.log("Title:", title);
+  console.log("Image object:", image);
+  console.log("Image valid?", sizeValid);
+
     if (!sizeValid && !editId) {
       toast.warning("Please upload an image with the correct dimensions.");
       return;
@@ -97,6 +102,7 @@ export default function CarouselManager() {
       console.error(error);
       toast.error("Error saving carousel image");
     }
+
   };
 
   // Edit carousel
