@@ -29,15 +29,16 @@ const app = express();
 // HTTP server wrapper (needed for socket.io)
 const server = http.createServer(app);
 
+// "http://localhost:5173",
 const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  process.env.FRONTEND_URL_PROD,
+ 
+  "https://strong-tulumba-a6c839.netlify.app",
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow curl/postman
+      if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       } else {
@@ -47,6 +48,7 @@ app.use(
     credentials: true,
   })
 );
+
 
 
 
@@ -78,8 +80,8 @@ io.on("connection", (socket) => {
 });
 
 // Middleware
-app.use(cors({ origin: allowedOrigins, credentials: true }));
-app.use(express.json());
+/*app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(express.json());*/
 
 //  Path setup
 const __filename = fileURLToPath(import.meta.url);
