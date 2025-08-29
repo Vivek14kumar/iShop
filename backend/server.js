@@ -29,9 +29,9 @@ const app = express();
 // HTTP server wrapper (needed for socket.io)
 const server = http.createServer(app);
 
-// "http://localhost:5173",
+
 const allowedOrigins = [
- 
+  "http://localhost:5173",
   "https://strong-tulumba-a6c839.netlify.app",
 ];
 
