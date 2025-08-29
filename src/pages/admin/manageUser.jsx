@@ -21,8 +21,8 @@ export default function ManageUsers() {
   const [collapsedAddresses, setCollapsedAddresses] = useState(false);
   const [collapsedOrders, setCollapsedOrders] = useState(false);
   const [orders, setOrders] = useState([]);
-  const [showResetModal, setShowResetModal] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
+  //const [showResetModal, setShowResetModal] = useState(false);
+  //const [newPassword, setNewPassword] = useState("");
   const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 
   useEffect(() => {
@@ -88,14 +88,14 @@ export default function ManageUsers() {
     });
   }
 
-  async function resetPassword(userId) {
+  /*async function resetPassword(userId) {
     try {
       await axios.post(`${apiUrl}/api/users/${userId}/reset-password`);
       toast.success("Password reset successfully!");
     } catch {
       toast.error("Failed to reset password");
     }
-  }
+  }*/
 
   useEffect(() => {
     if (activeTab === "orders" && selectedUser?.email) {
@@ -362,7 +362,7 @@ export default function ManageUsers() {
             onClick={() => {
               setSelectedUser(null);
               setEditMode(false);
-              setNewPassword(""); // reset password input
+             // setNewPassword(""); // reset password input
             }}
             className="px-2 py-1 border rounded"
           >
@@ -420,7 +420,7 @@ export default function ManageUsers() {
           <p className="p-2 border rounded bg-gray-100">
             <span className="font-semibold">Role:</span> {selectedUser.role}
           </p>
-          {/* Reset Password Button */}
+          {/* Reset Password Button 
         {editMode && (
           <button
             type="button"
@@ -429,7 +429,7 @@ export default function ManageUsers() {
           >
             Reset Password
           </button>
-        )}
+        )}*/}
           
         </div>
       )}
@@ -587,7 +587,7 @@ export default function ManageUsers() {
             onClick={() => {
               setEditMode(false);
               setSelectedUser(null);
-              setNewPassword("");
+             // setNewPassword("");
             }}
             className="px-4 py-2 border rounded hover:bg-gray-100"
           >
@@ -595,7 +595,7 @@ export default function ManageUsers() {
           </button>
         </div>
       )}
-      {/* Reset Password Modal */}
+      {/* Reset Password Modal 
           {showResetModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60 p-2">
               <div className="bg-white p-4 rounded-xl w-full max-w-md shadow-lg">
@@ -635,7 +635,7 @@ export default function ManageUsers() {
                 </div>
               </div>
             </div>
-          )}
+          )}*/}
           </div>
         </div>
       )}

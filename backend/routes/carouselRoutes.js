@@ -23,7 +23,6 @@ router.get("/", async (req, res) => {
     console.log("Fetched carousels:", carousels);
     res.json(carousels);
   } catch (error) {
-    console.error("Error fetching carousels:", error);
     res.status(500).json({ message: "Server Error" });
   }
 });
@@ -31,8 +30,6 @@ router.get("/", async (req, res) => {
 // POST: add new carousel
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    console.log("Incoming req.file:", req.file);
-    console.log("Incoming req.body:", req.body);
 
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
@@ -46,7 +43,6 @@ router.post("/", upload.single("image"), async (req, res) => {
     });
 
     const savedCarousel = await newCarousel.save();
-    console.log("Saved carousel:", savedCarousel);
 
     res.status(201).json(savedCarousel);
   } catch (error) {
@@ -58,9 +54,6 @@ router.post("/", upload.single("image"), async (req, res) => {
 // PUT: update carousel
 router.put("/:id", upload.single("image"), async (req, res) => {
   try {
-    console.log("Updating carousel ID:", req.params.id);
-    console.log("Incoming req.file:", req.file);
-    console.log("Incoming req.body:", req.body);
 
     const updateData = { title: req.body.title || "" };
 
@@ -76,7 +69,6 @@ router.put("/:id", upload.single("image"), async (req, res) => {
     if (!updatedCarousel)
       return res.status(404).json({ message: "Carousel not found" });
 
-    console.log("Updated carousel:", updatedCarousel);
     res.json(updatedCarousel);
   } catch (error) {
     console.error("Error updating carousel:", error);
@@ -87,13 +79,11 @@ router.put("/:id", upload.single("image"), async (req, res) => {
 // DELETE: delete carousel
 router.delete("/:id", async (req, res) => {
   try {
-    console.log("Deleting carousel ID:", req.params.id);
 
     const deletedCarousel = await Carousel.findByIdAndDelete(req.params.id);
     if (!deletedCarousel)
       return res.status(404).json({ message: "Carousel not found" });
 
-    console.log("Deleted carousel:", deletedCarousel);
     res.json({ message: "Carousel deleted successfully" });
   } catch (error) {
     console.error("Error deleting carousel:", error);

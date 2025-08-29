@@ -112,7 +112,6 @@ export default function Profile() {
     };
     fetchUserData();
   }, [user?.id, user?._id]);
-  console.log("Fetching orders for user:", user);
 
   // ---------- fetch orders with product details ----------
   const fetchOrdersWithProducts = async () => {
@@ -193,7 +192,6 @@ export default function Profile() {
           currentAddress
         );
       } else {
-        console.log("Posting address:", currentAddress);
 
         res = await axios.post(
           `${apiUrl}/api/users/${userId}/addresses`,

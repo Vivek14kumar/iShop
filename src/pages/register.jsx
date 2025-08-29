@@ -137,12 +137,12 @@ const Register = () => {
           )}
         </Formik>
 
-        {/* Terms */}
+        {/* Terms 
         <p className="text-xs text-gray-600 mt-4 text-center">
           By creating an account, you agree to iShop’s{" "}
           <span className="text-blue-600 cursor-pointer">Conditions of Use</span> and{" "}
           <span className="text-blue-600 cursor-pointer">Privacy Notice</span>.
-        </p>
+        </p>*/}
 
         {/* Divider */}
         <div className="my-6 flex items-center">
