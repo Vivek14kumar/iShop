@@ -1,16 +1,16 @@
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
+import express from 'express';
+import cors from 'cors';
+import http from 'http';
+import { Server } from 'socket.io';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Routes
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoute.js';
-import express from 'express';
-import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import http from 'http';
-import { Server } from 'socket.io';
-
-// Other routes
 import userRoutes from './routes/userRoutes.js';
 import uploadRoute from './routes/upload.js';
 import categoryRoutes from "./routes/categoryRoutes.js";
@@ -26,11 +26,11 @@ const server = http.createServer(app);
 
 // Allowed origins
 const allowedOrigins = [
-  process.env.FRONTEND_URL,      // local
-  process.env.FRONTEND_URL_PROD  // production
+  process.env.FRONTEND_URL,
+  process.env.FRONTEND_URL_PROD
 ];
 
-// CORS options
+// CORS options (used by both Express and Socket.IO)
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true); // allow Postman / curl
@@ -69,13 +69,14 @@ app.use('/api/users', userAccountRoutes);
 // Socket.IO setup
 const io = new Server(server, {
   cors: {
-    origin: corsOptions.origin,  // reuse same origin function
+    origin: corsOptions.origin,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   },
+  transports: ["websocket", "polling"] // include polling fallback
 });
 
-// Store io in app.locals so routes can use it
+// Make io accessible in routes
 app.locals.io = io;
 
 io.on("connection", (socket) => {
