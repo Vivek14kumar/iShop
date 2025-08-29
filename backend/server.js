@@ -80,8 +80,8 @@ io.on("connection", (socket) => {
 });
 
 // Middleware
-/*app.use(cors({ origin: allowedOrigins, credentials: true }));
-app.use(express.json());*/
+app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(express.json());
 
 //  Path setup
 const __filename = fileURLToPath(import.meta.url);
