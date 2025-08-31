@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL || "https://ishop-2-f9qp.onrender.com";
 const OrderSuccess = () => {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
@@ -14,7 +15,7 @@ const OrderSuccess = () => {
     const fetchOrder = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:5000/api/orders/${id}`);
+        const res = await axios.get(`${apiUrl}/api/orders/${id}`);
         setOrder(res.data);
       } catch (err) {
         console.error("Error fetching order:", err);
